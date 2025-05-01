@@ -32,18 +32,6 @@
             <h3>Detection Stream:</h3>
             <img src="{{ url_for('video_feed', filename=video) }}" width="720">
         </div>
-    <script>
-        setInterval(() => {
-            fetch('/counts')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("car-count").textContent = data.car;
-                    document.getElementById("bus-count").textContent = data.bus;
-                    document.getElementById("truck-count").textContent = data.truck;
-                    document.getElementById("motorbike-count").textContent = data.motorbike;
-                });
-        }, 1000); // Poll every second
-    </script>
     {% endif %}
 </body>
 </html>

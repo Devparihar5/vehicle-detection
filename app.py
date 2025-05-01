@@ -5,7 +5,8 @@ from ultralytics import YOLO
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = '/tmp/uploads'
+
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 model = YOLO("yolov8n.pt")
@@ -23,6 +24,7 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    global video_path
     file = request.files['video']
     filename = secure_filename(file.filename)
     video_path = os.path.join(UPLOAD_FOLDER, filename)
@@ -76,10 +78,10 @@ def generate_frames(video_path):
 
     cap.release()
 
-
 @app.route('/video_feed/<filename>')
 def video_feed(filename):
-    video_path = os.path.join(UPLOAD_FOLDER, secure_filename(filename))
+    video_path = os.path.join(UPLOAD_FOLDER, filename)
+
     if not os.path.exists(video_path):
         return "Video not found", 404
     return Response(generate_frames(video_path), mimetype='multipart/x-mixed-replace; boundary=frame')
