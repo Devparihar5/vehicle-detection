@@ -30,20 +30,8 @@
     <div class="container">
         <div class="video">
             <h3>Detection Stream:</h3>
-            <img src="{{ url_for('video_feed') }}" width="720">
+            <img src="{{ url_for('video_feed', filename=video) }}" width="720">
         </div>
-        <div>
-            <h3>Vehicle Counts:</h3>
-            <table>
-                <tr><th>Category</th><th>Count</th></tr>
-                <tr><td>Car</td><td id="car-count">0</td></tr>
-                <tr><td>Bus</td><td id="bus-count">0</td></tr>
-                <tr><td>Truck</td><td id="truck-count">0</td></tr>
-                <tr><td>Motorbike</td><td id="motorbike-count">0</td></tr>
-            </table>
-        </div>
-    </div>
-
     <script>
         setInterval(() => {
             fetch('/counts')

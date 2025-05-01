@@ -1,2 +1,4 @@
 .venv/
 yolov8n.pt
+uploads/
+__pycache__/
