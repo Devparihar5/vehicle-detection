@@ -1,0 +1,10 @@
+# trackers/bytetrack.yaml
+tracker_type: bytetrack
+track_high_thresh: 0.5
+track_low_thresh: 0.3
+new_track_thresh: 0.7
+track_buffer: 30
+match_thresh: 0.8
+mot20: False
+conf_thres: 0.5
+fuse_score: True  # 👈 this is the key line that prevents the error

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Real-time Vehicle Detection</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
+        .video {
+            margin-right: 40px;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Upload a Video for Real-Time Vehicle Detection</h2>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="video" accept="video/*" required>
+        <button type="submit">Upload & Stream</button>
+    </form>
+
+    {% if stream %}
+    <div class="container">
+        <div class="video">
+            <h3>Detection Stream:</h3>
+            <img src="{{ url_for('video_feed') }}" width="720">
+        </div>
+        <div>
+            <h3>Vehicle Counts:</h3>
+            <table>
+                <tr><th>Category</th><th>Count</th></tr>
+                <tr><td>Car</td><td id="car-count">0</td></tr>
+                <tr><td>Bus</td><td id="bus-count">0</td></tr>
+                <tr><td>Truck</td><td id="truck-count">0</td></tr>
+                <tr><td>Motorbike</td><td id="motorbike-count">0</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        setInterval(() => {
+            fetch('/counts')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("car-count").textContent = data.car;
+                    document.getElementById("bus-count").textContent = data.bus;
+                    document.getElementById("truck-count").textContent = data.truck;
+                    document.getElementById("motorbike-count").textContent = data.motorbike;
+                });
+        }, 1000); // Poll every second
+    </script>
+    {% endif %}
+</body>
+</html>
