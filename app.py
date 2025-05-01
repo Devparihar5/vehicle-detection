@@ -76,6 +76,3 @@ def video_feed():
 @app.route('/counts')
 def get_counts():
     return jsonify(vehicle_counts)
-
-if __name__ == '__main__':
-    app.run(debug=True)
